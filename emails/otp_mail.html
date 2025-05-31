@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your OTP Code</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 20px;
+        margin: 0 auto;
+        margin-top: 20px;
+        max-width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .otp-code {
+        font-size: 36px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        margin: 20px 0;
+        color: #444444;
+      }
+
+      .instructions {
+        font-size: 14px;
+        color: #666666;
+      }
+
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #888888;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Your OTP Code</h2>
+      <div class="otp-code">{{otp_code}}</div>
+      <p class="footer">
+        This is an automated email, please do not reply. If you didn't request
+        this, please ignore this email.
+      </p>
+    </div>
+  </body>
+</html>
