@@ -10,6 +10,8 @@ Backend API for [OmSEHAT](https://api-omsehat.sportsnow.app), built with **Go** 
 - AI-Powered Chat Sessions
 - Doctor Diagnosis Support
 - Appointment Queue Management
+- AI Psychologist for Healthcare Worker Burnout
+- Mental Health Support for General Users
 - PostgreSQL for Persistence
 - Dockerized Setup
 - Gemini Model Integration
@@ -311,9 +313,214 @@ Fetch user details, current session, and session history.
 
 OmSEHAT leverages [Gemini](https://deepmind.google/technologies/gemini/) for contextual and medical-like conversational intelligence. The AI uses your user metrics (age, weight, vitals, etc.) to provide personalized replies.
 
+The mental health chatbot provides specialized support for:
+- Healthcare workers experiencing burnout and stress due to high workloads, especially in areas with high COVID-19 cases
+- General users with mental health concerns
+- Providing personalized coping strategies and self-care recommendations
+- Offering evidence-based mental health support in a conversational format
+
 ---
 
 ## 📎 Links
 
 * 🌐 [OmSEHAT Web App](https://omsehat.sportsnow.app)
 * 🐙 [GitHub Repository](https://github.com/Om-SEHAT/omsehat-api)
+
+---
+
+## 🧠 Therapy Chatbot Endpoints
+
+### 🧠 `POST /therapy`
+
+Create a new therapy session for mental health support.
+
+**Request Body:**
+
+```json
+{
+  "stress_level": 8,
+  "mood_rating": 5,
+  "sleep_quality": 4,
+  "is_health_worker": true,
+  "specialization": "Nurse",
+  "work_hours": 50
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "therapy-session-id",
+  "user_id": "user-id",
+  "stress_level": 8,
+  "mood_rating": 5,
+  "sleep_quality": 4,
+  "is_health_worker": true,
+  "specialization": "Nurse",
+  "work_hours": 50,
+  "created_at": "2025-05-30T14:28:45.123456Z",
+  "updated_at": "2025-05-30T14:28:45.123456Z"
+}
+```
+
+---
+
+### 💬 `POST /therapy/:id`
+
+Send a new message in a therapy session.
+
+**Request Body:**
+
+```json
+{
+  "new_message": "I've been feeling very stressed about work lately."
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Chat history updated successfully",
+  "next_action": "CONTINUE_CHAT",
+  "reply": "I understand that you're feeling stressed about work. Can you tell me more about what aspects of your job are causing the most stress?",
+  "recommendation": "Consider practicing mindfulness and deep breathing exercises when feeling overwhelmed.",
+  "next_steps": "Try setting boundaries at work and taking short breaks throughout your shift.",
+  "session_id": "therapy-session-id"
+}
+```
+
+---
+
+### 📄 `GET /therapy/:id`
+
+Fetch active therapy session details and chat history.
+
+**Sample Response:**
+
+```json
+{
+  "id": "therapy-session-id",
+  "user": {
+    "id": "user-id",
+    "name": "Sarah",
+    "email": "sarah@example.com"
+  },
+  "stress_level": 8,
+  "mood_rating": 5,
+  "sleep_quality": 4,
+  "is_health_worker": true,
+  "specialization": "Nurse",
+  "work_hours": 50,
+  "messages": [
+    {
+      "role": "user",
+      "content": "I've been feeling very stressed about work lately."
+    },
+    {
+      "role": "therapist",
+      "content": "I understand that you're feeling stressed about work. Can you tell me more about what aspects of your job are causing the most stress?"
+    }
+  ],
+  "created_at": "2025-05-30T14:28:45.123456Z",
+  "updated_at": "2025-05-30T14:28:45.123456Z"
+}
+```
+
+---
+
+### 📚 `GET /therapy/history`
+
+Fetch a user's therapy session history.
+
+**Sample Response:**
+
+```json
+{
+  "sessions": [
+    {
+      "id": "therapy-session-id-1",
+      "stress_level": 8,
+      "mood_rating": 5,
+      "sleep_quality": 4,
+      "is_health_worker": true,
+      "recommendation": "Practice mindfulness techniques and establish better work-life boundaries.",
+      "next_steps": "Consider joining a healthcare worker support group and speaking with your supervisor about workload concerns.",
+      "created_at": "2025-05-30T14:28:45.123456Z"
+    },
+    {
+      "id": "therapy-session-id-2",
+      "stress_level": 6,
+      "mood_rating": 7,
+      "sleep_quality": 6,
+      "is_health_worker": true,
+      "recommendation": "Continue with breathing exercises and add regular physical activity to your routine.",
+      "next_steps": "Schedule at least 30 minutes of personal time each day and maintain a consistent sleep schedule.",
+      "created_at": "2025-05-20T09:15:30.123456Z"
+    }
+  ]
+}
+```
+
+---
+
+### 📋 `GET /therapy/detail/:id`
+
+Fetch details of a specific therapy session, including chat history.
+
+**Sample Response:**
+
+```json
+{
+  "id": "therapy-session-id",
+  "user": {
+    "id": "user-id",
+    "name": "Sarah",
+    "email": "sarah@example.com"
+  },
+  "stress_level": 8,
+  "mood_rating": 5,
+  "sleep_quality": 4,
+  "is_health_worker": true,
+  "specialization": "Nurse",
+  "work_hours": 50,
+  "messages": [
+    {
+      "role": "user",
+      "content": "I've been feeling very stressed about work lately."
+    },
+    {
+      "role": "therapist",
+      "content": "I understand that you're feeling stressed about work. Can you tell me more about what aspects of your job are causing the most stress?"
+    }
+  ],
+  "recommendation": "Practice mindfulness techniques and establish better work-life boundaries.",
+  "next_steps": "Consider joining a healthcare worker support group and speaking with your supervisor about workload concerns.",
+  "created_at": "2025-05-30T14:28:45.123456Z",
+  "updated_at": "2025-05-30T14:45:12.789123Z"
+}
+```
+
+---
+
+### 📊 `GET /therapy/mental-health-summary`
+
+Get a summary of a user's mental health trends over time based on their therapy sessions.
+
+**Sample Response:**
+
+```json
+{
+  "total_sessions": 5,
+  "healthcare_worker": true,
+  "avg_stress_level": 7.2,
+  "avg_mood_rating": 5.6,
+  "avg_sleep_quality": 4.8,
+  "stress_trend": "improving",
+  "mood_trend": "improving",
+  "sleep_trend": "stable",
+  "last_session_date": "2025-05-29",
+  "completed_sessions": 5
+}
+```

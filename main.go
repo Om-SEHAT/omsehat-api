@@ -10,6 +10,7 @@ import (
 
 	"github.com/Om-SEHAT/omsehat-api/config"
 	"github.com/Om-SEHAT/omsehat-api/controllers"
+	"github.com/Om-SEHAT/omsehat-api/middleware"
 )
 
 func main() {
@@ -42,6 +43,18 @@ func main() {
 	r.GET("/session/:id", controllers.GetActiveSession)
 	r.POST("/session/:id", controllers.GenerateSessionResponse)
 	r.POST("/session/:id/diagnose", controllers.DoctorDiagnose)
+
+	// therapy session routes
+	therapyRoutes := r.Group("/therapy")
+	therapyRoutes.Use(middleware.AuthMiddleware())
+	{
+		therapyRoutes.POST("", controllers.CreateTherapySession)
+		therapyRoutes.GET("/:id", controllers.GetActiveTherapySession)
+		therapyRoutes.POST("/:id", controllers.GenerateTherapyResponse)
+		therapyRoutes.GET("/history", controllers.GetTherapySessionHistory)
+		therapyRoutes.GET("/detail/:id", controllers.GetTherapySessionDetail)
+		therapyRoutes.GET("/mental-health-summary", controllers.GetUserMentalHealthSummary)
+	}
 
 	// queue routes
 	r.GET("/queue/:doctor_id", controllers.GetCurrentQueue)

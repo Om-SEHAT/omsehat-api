@@ -136,7 +136,7 @@ func UpdateChatHistory(sessionId string, newMessage string, LLMResponse string) 
 func buildSystemPrompt(session *models.Session) string {
 	// Build the system prompt using the user's data
 	userDataText := fmt.Sprintf(
-		"\nHere's the user's data: \n\nName:%s\nAge:%s\nGender:%s\nNationality:%s\nWeight: %d\nHeight: %d\nHeartrate: %d\nBodytemp: %f\n",
+		"\nHere's the user's data: \n\nName:%s\nAge:%s\nGender:%s\nNationality:%s\nWeight: %f\nHeight: %f\nHeartrate: %f\nBodytemp: %f\n",
 		session.User.Name,
 		utils.DateToAgeString(session.User.DOB),
 		session.User.Gender,
