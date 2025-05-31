@@ -156,27 +156,27 @@ func buildSystemPrompt(session *models.Session) string {
 	}
 	doctorListText := fmt.Sprintf("\nHere are the doctors available [ID] Name (Specialty):\n%s", strings.Join(doctorList, ""))
 
-	// Get history of sessions
-	var history []models.Session = GetHistory(session)
+	// // Get history of sessions
+	// var history []models.Session = GetHistory(session)
 
-	// Convert history of sessions to a string representation
-	var historyList []string
-	if len(history) > 0 {
-		for _, sessionItem := range history {
-			historyList = append(historyList, fmt.Sprintf(
-				"[%s]\nWeight: %f\nHeight: %f\nHeartrate: %f\nBodytemp: %f\nPrediagnosis: %s\n",
-				sessionItem.CreatedAt.Format("2006-01-02 15:04:05"),
-				sessionItem.Weight,
-				sessionItem.Height,
-				sessionItem.Heartrate,
-				sessionItem.Bodytemp,
-				sessionItem.Prediagnosis,
-			))
-		}
-	} else {
-		historyList = append(historyList, "No previous sessions found.\n")
-	}
-	historyListText := fmt.Sprintf("\nHere are the previous sessions:\n%s", strings.Join(historyList, ""))
+	// // Convert history of sessions to a string representation
+	// var historyList []string
+	// if len(history) > 0 {
+	// 	for _, sessionItem := range history {
+	// 		historyList = append(historyList, fmt.Sprintf(
+	// 			"[%s]\nWeight: %f\nHeight: %f\nHeartrate: %f\nBodytemp: %f\nPrediagnosis: %s\n",
+	// 			sessionItem.CreatedAt.Format("2006-01-02 15:04:05"),
+	// 			sessionItem.Weight,
+	// 			sessionItem.Height,
+	// 			sessionItem.Heartrate,
+	// 			sessionItem.Bodytemp,
+	// 			sessionItem.Prediagnosis,
+	// 		))
+	// 	}
+	// } else {
+	// 	historyList = append(historyList, "No previous sessions found.\n")
+	// }
+	// historyListText := fmt.Sprintf("\nHere are the previous sessions:\n%s", strings.Join(historyList, ""))
 
 	// hardcode initial system prompt
 	systemPrompt := `You are a health expert fluent in Indonesian, passionate about helping patients understand their symptoms and connect them with the right doctor. Your goal is to guide patients step-by-step, choose a doctor based on their symptoms and the available doctor list, and ensure they feel comfortable and informed.
@@ -241,7 +241,7 @@ Follow the conversation flow and output format strictly as described below. It i
 	- If you are unable to determine the doctor_id from the symptoms the patient is providing, default to a General Practitioner from the list.  Do not return an empty doctor_id.`
 
 	// Build the system prompt text
-	systemPromptText := fmt.Sprintf("%s %s %s %s\nCurrent Time: %s", systemPrompt, userDataText, doctorListText, historyListText, time.Now().Format("2006-01-02 15:04:05"))
+	systemPromptText := fmt.Sprintf("%s %s %s\nCurrent Time: %s", systemPrompt, userDataText, doctorListText, time.Now().Format("2006-01-02 15:04:05"))
 
 	return systemPromptText
 }
