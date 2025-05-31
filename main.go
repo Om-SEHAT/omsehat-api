@@ -55,7 +55,7 @@ func main() {
 
 	// test routes
 	r.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
+		c.String(200, "pong - om sehat API is running")
 	})
 
 	r.Run(":8080") // listen and serve on
